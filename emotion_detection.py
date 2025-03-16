@@ -15,8 +15,7 @@ def emotion_detector(text_to_analyse):
     Returns:
         dict: A dictionary containing the emotion.
     """
-    #label = "UNKNOWN"
-    #score = "UNKNOWN"
+
     # URL of the emotion analysis service
     url = (
         "https://sn-watson-emotion.labs.skills.network/"
@@ -33,8 +32,25 @@ def emotion_detector(text_to_analyse):
 
     # Parsing the JSON response from the API
     formatted_response = json.loads(response.text)
-    # Returning a dictionary containing sentiment analysis results
-    return formatted_response
+
+    #return formatted_response
+    anger_score     = formatted_response["emotionPredictions"][0]["emotion"]["anger"]
+    disgust_score   = formatted_response["emotionPredictions"][0]["emotion"]["disgust"]
+    fear_score      = formatted_response["emotionPredictions"][0]["emotion"]["fear"]
+    joy_score       = formatted_response["emotionPredictions"][0]["emotion"]["joy"]
+    sadness_score   = formatted_response["emotionPredictions"][0]["emotion"]["sadness"]
+    emotion_scores  = formatted_response["emotionPredictions"][0]["emotion"]
+    dominant_emotion = max(emotion_scores, key=emotion_scores.get)
+    return {
+        'anger': anger_score,
+        'disgust': disgust_score,
+        'fear': fear_score,
+        'joy': joy_score,
+        'sadness': sadness_score,
+        'dominant_emotion': dominant_emotion
+    }
+
+
 
 '''
     # If the response status code is 200, extract the label and score from the response
