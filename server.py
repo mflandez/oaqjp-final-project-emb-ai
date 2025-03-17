@@ -23,6 +23,10 @@ def emotionDetector():
     sadness = response['sadness']
     dominant_emotion = response['dominant_emotion']
 
+    # Check if the dominant emotion is None, indicating an error or invalid input
+    if dominant_emotion is None:
+        return "Invalid input! Try again."
+
     # Return a formatted string with the sentiment label and score
     return (
         f"For the given statement, the system response is 'anger': {anger}, "
@@ -38,4 +42,3 @@ def render_index_page():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-    
